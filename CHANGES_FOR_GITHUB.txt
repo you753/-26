@@ -1,0 +1,142 @@
+====================================================
+التعديلات المطلوبة على GitHub لإصلاح مشاكل Render
+====================================================
+
+الملف: server/routes.ts
+------------------------
+
+التعديل 1 - سطر 5179:
+----------------------
+القديم:
+'SELECT * FROM branch_permissions WHERE branch_id = $1 ORDER BY section_name',
+
+الجديد:
+'SELECT * FROM branch_permissions WHERE branch_id = $1 ORDER BY section_id',
+
+
+التعديل 2 - سطر 5189:
+----------------------
+القديم:
+'INSERT INTO branch_permissions (branch_id, section_name, is_enabled) VALUES ($1, $2, $3)',
+
+الجديد:
+'INSERT INTO branch_permissions (branch_id, section_id, is_enabled) VALUES ($1, $2, $3)',
+
+
+التعديل 3 - سطر 5195:
+----------------------
+القديم:
+'SELECT * FROM branch_permissions WHERE branch_id = $1 ORDER BY section_name',
+
+الجديد:
+'SELECT * FROM branch_permissions WHERE branch_id = $1 ORDER BY section_id',
+
+
+التعديل 4 - سطر 5218:
+----------------------
+القديم:
+WHERE branch_id = $2 AND section_name = $3
+
+الجديد:
+WHERE branch_id = $2 AND section_id = $3
+
+
+التعديل 5 - سطر 5226:
+----------------------
+القديم:
+'INSERT INTO branch_permissions (branch_id, section_name, is_enabled) VALUES ($1, $2, $3) RETURNING *',
+
+الجديد:
+'INSERT INTO branch_permissions (branch_id, section_id, is_enabled) VALUES ($1, $2, $3) RETURNING *',
+
+
+====================================================
+ملفات جديدة يجب إضافتها
+====================================================
+
+الملف 1: vite.config.render.ts (في المجلد الرئيسي)
+---------------------------------------------------
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "client", "src"),
+      "@shared": path.resolve(__dirname, "shared"),
+      "@assets": path.resolve(__dirname, "attached_assets"),
+    },
+  },
+  root: path.resolve(__dirname, "client"),
+  build: {
+    outDir: path.resolve(__dirname, "dist/public"),
+    emptyOutDir: true,
+  },
+});
+
+
+الملف 2: scripts/post-build.js
+-------------------------------
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, '..');
+
+const srcDir = path.join(rootDir, 'dist', 'public');
+const destDir = path.join(rootDir, 'server', 'public');
+
+function copyRecursive(src, dest) {
+  if (!fs.existsSync(src)) {
+    console.error(`Source directory not found: ${src}`);
+    process.exit(1);
+  }
+
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest, { recursive: true });
+  }
+
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+
+    if (entry.isDirectory()) {
+      copyRecursive(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+console.log('Copying build files to server/public...');
+console.log(`   From: ${srcDir}`);
+console.log(`   To: ${destDir}`);
+
+copyRecursive(srcDir, destDir);
+
+console.log('Build files copied successfully!');
+
+
+====================================================
+إعدادات Render
+====================================================
+
+Root Directory: (فارغ)
+Build Command: npm install && cp vite.config.render.ts vite.config.ts && npm run build && node scripts/post-build.js && npm run db:push
+Start Command: npm start
+
+Environment Variables:
+DATABASE_URL = postgresql://bmg_user:PASSWORD@dpg-xxx.render.com/bmg?sslmode=require
+NODE_ENV = production
+
+====================================================

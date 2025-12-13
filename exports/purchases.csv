@@ -1,0 +1,1 @@
+id,user_id,supplier_id,branch_id,invoice_number,total,date,payment_method,sent_to_supplier_account,sent_to_supplier_account_at,notes,items

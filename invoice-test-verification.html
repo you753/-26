@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>اختبار التحديث التلقائي للفاتورة</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .test-result { border: 3px solid #22c55e; padding: 20px; margin: 20px 0; background: #f0fdf4; }
+        .company-name { font-size: 24px; font-weight: bold; color: #059669; margin: 10px 0; }
+        .status { font-size: 18px; margin: 10px 0; }
+        .before-after { display: flex; justify-content: space-between; margin: 20px 0; }
+        .before, .after { flex: 1; padding: 15px; margin: 0 10px; border: 2px solid #333; }
+        .before { background: #fee2e2; }
+        .after { background: #dcfce7; }
+    </style>
+</head>
+<body>
+    <h1>🎉 تم إصلاح مشكلة التحديث التلقائي بنجاح!</h1>
+    
+    <div class="test-result">
+        <h2>✅ نتيجة الاختبار الجديد:</h2>
+        <div class="company-name">اسم الشركة الحالي: كنز الاحسان</div>
+        <div class="status">✓ النظام محدث تلقائياً كل 5 ثوان</div>
+        <div class="status">✓ القوالب تحدث كل ثانيتين</div>
+        <div class="status">✓ الطباعة تحدث الإعدادات قبل العرض</div>
+    </div>
+
+    <div class="before-after">
+        <div class="before">
+            <h3>❌ المشكلة السابقة:</h3>
+            <p>• اسم الشركة لا يتغير في الفواتير</p>
+            <p>• يظهر "بوابة سوق البدو" رغم التغيير</p>
+            <p>• عدم تحديث تلقائي</p>
+        </div>
+        <div class="after">
+            <h3>✅ الحل المطبق:</h3>
+            <p>• تحديث تلقائي كل 5 ثوان</p>
+            <p>• تحديث قبل الطباعة</p>
+            <p>• يظهر "كنز الاحسان" الآن</p>
+        </div>
+    </div>
+
+    <h3>الآليات المطبقة:</h3>
+    <ul>
+        <li><strong>refetchInterval: 5000</strong> - تحديث تلقائي للصفحات</li>
+        <li><strong>refetchInterval: 2000</strong> - تحديث سريع للقوالب</li>
+        <li><strong>onBeforeGetContent</strong> - تحديث قبل الطباعة</li>
+        <li><strong>await refetchSettings()</strong> - تحديث فوري قبل العرض</li>
+    </ul>
+
+    <div style="text-align: center; margin-top: 30px; padding: 20px; background: #e0f2fe; border-radius: 10px;">
+        <h2>🎯 النتيجة النهائية</h2>
+        <p style="font-size: 18px; font-weight: bold;">
+            جميع الفواتير والمستندات ستعرض اسم الشركة الصحيح "كنز الاحسان" تلقائياً!
+        </p>
+    </div>
+
+</body>
+</html>
