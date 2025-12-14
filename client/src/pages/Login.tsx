@@ -70,8 +70,19 @@ export default function Login() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+  <div
+    className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 flex items-center justify-center p-4"
+    style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '1rem',
+      direction: 'rtl',
+    }}
+  >
+    <div className="w-full max-w-md" style={{ width: '100%', maxWidth: '28rem' }}>
+
         {/* شعار النظام */}
         <div className="text-center mb-8">
           <div className="relative inline-block mb-4">
@@ -89,7 +100,15 @@ export default function Login() {
           <p className="text-gray-600">نظام محاسبي متكامل للشركات</p>
         </div>
 
-        <Card className="shadow-xl border-0">
+<Card
+  className="shadow-xl border-0"
+  style={{
+    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+    border: 'none',
+    background: 'white',
+    borderRadius: '12px',
+  }}
+>
           <CardHeader className="text-center pb-2">
             <CardTitle className="flex items-center justify-center gap-2 text-xl">
               <Shield className="h-5 w-5 text-amber-600" />
